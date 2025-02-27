@@ -1,3 +1,24 @@
+<?php
+// Array asociativo para guardar valor de eficiencia por vehículo y nombre.
+$listaVehículos = [
+    "default" => [-1, "ERR: Vehículo no encontrado"],
+    "Camion5T" => [12, "Camión de 5 toneladas"],
+    "Camion3T" => [16, "Camión de 3 toneladas"],
+    "PickUp" => [22, "Pick-Up"],
+    "Panel" => [28, "Panel"],
+    "Moto" => [42, "Motocicleta"]
+];
+
+// En caso que no se haya seleccionado un vehículo, utilizar default.
+$vehículo = $_GET["vehículo"] ?? "default";
+$distancia = $_GET["distancia"] ?? 0; // Obteniendo por método GET la distancia.
+
+
+// Calculando el consumo de combustible.
+$consumo = round((float)($distancia / $listaVehículos[$vehículo][0]), 2);
+$nombreVehículo = $listaVehículos[$vehículo][1];
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -11,11 +32,17 @@
 
 <body>
     <div class="container">
-        <div class="card mt-5">
-            <div class="card-body">
-                <h3 class="card-title">Ejercicio 3</h1>
-
+        <div class="row justify-content-center">
+            <div class="card mt-5 col-md-8 col-lg-6">
+                <h3 class="card-header">Consumo de combustible</h3>
+                <div class="card-body">
+                    <h4 class="card-title">Vehículo: <?= $nombreVehículo ?></h1>
+                        <p class="card-text">En <?= $nombreVehículo ?>, se recorrerán <?= $distancia ?> Km de distancia, consumiendo un total de <?= $consumo ?> galones.</p>
+                </div>
             </div>
+        </div>
+        <div class="row justify-content-center my-2">
+            <a href="Ejercicio03.html" class="btn btn-secondary col-md-8 col-lg-6">Regresar</a>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -24,9 +51,3 @@
 </body>
 
 </html>
-<?php
-
-// Array asociativo para guardar valor de eficiencia por vehiculo.
-$eficiencia = array("Camion5T" => 12, "Camion3T" => 16, "PickUp" => 22, "Panel" => 28, "Moto" => 42);
-
-$vehiculo = $_GET["vehiculo"];
