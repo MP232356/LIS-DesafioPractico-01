@@ -1,38 +1,30 @@
 <?php
+$unidades = [
+    "Metros" => [
+        "Pulgadas" => 39.37,
+        "Yardas" => 1.094,
+        "Pies" => 3.281
+    ],
+    "Pulgadas" => [
+        "Metros" => 0.0254,
+        "Yardas" => 0.0278,
+        "Pies" => 0.0833
+    ],
+    "Yardas" => [
+        "Metros" => 0.9141,
+        "Pulgadas" => 36,
+        "Pies" => 3
+    ],
+    "Pies" => [
+        "Metros" => 0.3048,
+        "Pulgadas" => 12,
+        "Yardas" => 0.3333
+    ]
+];
 
 $unidadSeleccionada = $_GET["unidad"] ?? "Metros";
 $cantidad = $_GET["cantidad"] ?? 0;
-
-$cantidadMetros = 0;
-$conversionMetros = [
-    "Pulgadas" => 39.37,
-    "Yardas" => 1.094,
-    "Pies" => 3.281
-];
-
-switch ($unidadSeleccionada) {
-    case "Metros":
-        $cantidadMetros = (float)$cantidad;
-        break;
-    case "Pulgadas":
-        $cantidadMetros = (float)($cantidad / 39.37);
-        break;
-    case "Yardas":
-        $cantidadMetros = (float)($cantidad / 1.094);
-        break;
-    case "Pies":
-        $cantidadMetros = (float)($cantidad / 3.281);
-        break;
-    default:
-        break;
-}
-
-$resultados = [];
-foreach ($conversionMetros as $unidad => $factor) {
-    $resultados[$unidad] = round($cantidadMetros * $factor, 2);
-}
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -56,10 +48,10 @@ foreach ($conversionMetros as $unidad => $factor) {
                             <th>Cantidad</th>
                         </tr>
                         <?php
-                        foreach ($resultados as $unidad => $valor) {
+                        foreach ($unidades[$unidadSeleccionada] as $unidad => $factor) {
                             echo "<tr>";
                             echo "<td>$unidad</td>";
-                            echo "<td>$valor</td>";
+                            echo "<td>" . round($cantidad * $factor, 4) . "</td>";
                             echo "</tr>";
                         }
                         ?>
